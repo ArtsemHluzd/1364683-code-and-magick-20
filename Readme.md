@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Отдел Обучения](https://up.htmlacademy.ru/javascript/20/user/1364683).
-* Наставник: `Неизвестно`.
+* Наставник: [Максим Усиков](https://htmlacademy.ru/profile/id939693).
 
 ---
 
