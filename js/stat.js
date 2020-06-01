@@ -13,6 +13,8 @@ var renderCloud = function(ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
+
+
 window.renderStatistics = function(ctx, arrName, arrTime) {
 
 renderCloud(ctx, CLOUD_START_X + 10, CLOUD_START_Y + 10, 'rgba(0, 0, 0, 0.7)');
