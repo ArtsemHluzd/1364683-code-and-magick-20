@@ -7,42 +7,37 @@ var HISTOGRAM_START_Y = 240;
 var MAX_HEIGHT_HISTOGRAM = 150;
 var WEIGHT_HISTOGRAM = 40;
 var DISTANCE_BETWEEN_HISTOGRAM = 50;
-var randomNumber;
-var randomBlue;
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
-var renderText = function (ctx, index, name, color) {
+var renderText = function (ctx, x, y, index, text, color) {
   ctx.fillStyle = color;
-    ctx.fillText(name, HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index), HISTOGRAM_START_Y + 20);
+  ctx.fillText(text, x, y + 20);
 }
 
-var renderTime = function (ctx, index, time, color, height) {
+var renderTime = function (ctx, x, y, index, time, color, height) {
   ctx.fillStyle = color;
-    ctx.fillText(time, HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index), HISTOGRAM_START_Y - height - 5);
+    ctx.fillText(time, x, y - height - 5);
 }
 
-var renderHistogram = function (ctx, index, height, color) {
+var renderBar = function (ctx, x, y, index, height, color) {
   ctx.fillStyle = color;
-  ctx.fillRect(HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index), HISTOGRAM_START_Y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
-}
-
-var renderDiagram = function (ctx, index, name, colorText, colorHistogram, time, height) {
-  renderText(ctx, index, name, colorText);
-  renderTime(ctx, index, time, colorText, height);
-  renderHistogram(ctx, index, height, colorHistogram);
+  ctx.fillRect(x, y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
 }
 
 var getRandomInt = function(min, max) {
-  randomNumber = Math.round(Math.random() * (max - min) + 1);
-  return randomNumber;
+  return Math.round(Math.random() * (max - min) + 1);
 }
 
+var randomBlue;
 var getRandomBlue = function() {
-  randomBlue = "hsl(245, " + randomNumber + "%, 50%)";
+  var hue = 245;
+  var suration = getRandomInt(1, 100);
+  var lightness = 50;
+  randomBlue = "hsl(" + hue + ", " + suration + "%, " + lightness + "%)";
   return randomBlue;
 }
 
@@ -60,27 +55,31 @@ window.renderStatistics = function (ctx, arrName, arrTime) {
   var maxTime = 0;
   var height;
 
-  // Поиск максимального значения из arrTime
-  var findMaxTime = function () {
-    for (var i = 0; i < arrTime.length; i++) {
-      if (maxTime < arrTime[i]) {
-        maxTime = Math.round(arrTime[i]);
-      }
-    }
-    return maxTime;
+  var findMaxTime = function (arr) {
+    maxTime = Math.max.apply(null, arr);
+    return Math.round(maxTime);
   }
-  findMaxTime();
+  findMaxTime(arrTime);
+
+  var renderHistogram = function (ctx, index, name, colorText, colorHistogram, time, height) {
+    var x = HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index);
+    var y = HISTOGRAM_START_Y;
+    renderText(ctx, x, y, index, name, colorText);
+    renderTime(ctx, x, y, index, time, colorText, height);
+    renderBar(ctx, x, y, index, height, colorHistogram);
+  }
 
   // Вывод гистограмм
   for (var i = 0; i < arrTime.length; i++) {
-    height = (arrTime[i] * MAX_HEIGHT_HISTOGRAM) / maxTime;
+    var height = (arrTime[i] * MAX_HEIGHT_HISTOGRAM) / maxTime;
+    var name = arrName[i];
+    var time = arrTime[i];
     if (arrName[i] == "Вы") {
-      renderDiagram(ctx, i, arrName[i], 'black', 'rgba(255, 0, 0, 1)', Math.round(arrTime[i]), height);
+      renderHistogram(ctx, i, name, 'black', 'rgba(255, 0, 0, 1)', Math.round(time), height);
     } else {
-      // var randomNumber = Math.round(Math.random() * (100 - 1) + 1);
       getRandomInt(1, 100);
       getRandomBlue();
-      renderDiagram(ctx, i, arrName[i], 'black', randomBlue, Math.round(arrTime[i]), height);
+      renderHistogram(ctx, i, name, 'black', randomBlue, Math.round(time), height);
     }
   }
 }
