@@ -42,29 +42,28 @@ var findMaxTime = function (arr) {
   return Math.round(maxTime);
 };
 
-  var renderBar = function (context, index, name, colorText, colorHistogram, time, height) {
-    var x = HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index);
-    var y = HISTOGRAM_START_Y;
-    renderText(context, x + 10, y, name, colorText);
-    renderText(context, x + 50, y, time, colorText, height);
-    renderRect(context, x, y, height, colorHistogram);
-    console.log(x);
-  };
+var renderBar = function (context, index, name, colorText, colorHistogram, time, height) {
+  var x = HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index);
+  var y = HISTOGRAM_START_Y;
+  renderText(context, x + 10, y, name, colorText);
+  renderText(context, x + 50, y, time, colorText, height);
+  renderRect(context, x, y, height, colorHistogram);
+};
 
-  function renderHistogram (ctx, arrName, arrTime) {
-    for (var i = 0; i < arrTime.length; i++) {
-      var height = (arrTime[i] * MAX_HEIGHT_HISTOGRAM) / findMaxTime(arrTime);
-      var name = arrName[i];
-      var time = arrTime[i];
-      var colorText = 'black';
+function renderHistogram(ctx, arrName, arrTime) {
+  for (var i = 0; i < arrTime.length; i++) {
+    var height = (arrTime[i] * MAX_HEIGHT_HISTOGRAM) / findMaxTime(arrTime);
+    var name = arrName[i];
+    var time = arrTime[i];
+    var colorText = 'black';
 
-      if (name == 'Вы') {
-        renderBar(ctx, i, name, colorText, 'rgba(255, 0, 0, 1)', Math.round(time), height);
-      } else {
-        renderBar(ctx, i, name, colorText, getRandomBlue(), Math.round(time), height);
-      }
+    if (name === 'Вы') {
+      renderBar(ctx, i, name, colorText, 'rgba(255, 0, 0, 1)', Math.round(time), height);
+    } else {
+      renderBar(ctx, i, name, colorText, getRandomBlue(), Math.round(time), height);
     }
-  };
+  }
+}
 
 window.renderStatistics = function (ctx, arrName, arrTime) {
 
