@@ -21,11 +21,6 @@ var renderText = function (ctx, x, y, text, color) {
   ctx.fillText(text, x, y);
 };
 
-var findMaxTime = function (arr) {
-  var maxTime = Math.max.apply(null, arr);
-  return Math.round(maxTime);
-};
-
 var renderRect = function (ctx, x, y, height, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
@@ -42,12 +37,18 @@ var getRandomBlue = function () {
   return 'hsl(' + hue + ', ' + suration + '%, ' + lightness + '%)';
 };
 
-  var renderBar = function (context, index, name, colorText, colorHistogram, time, height1) {
+var findMaxTime = function (arr) {
+  var maxTime = Math.max.apply(null, arr);
+  return Math.round(maxTime);
+};
+
+  var renderBar = function (context, index, name, colorText, colorHistogram, time, height) {
     var x = HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index);
     var y = HISTOGRAM_START_Y;
-    renderText(context, x, y, index, name, colorText);
-    renderTime(context, x, y, index, time, colorText, height1);
+    renderText(context, x + 10, y, index, name, colorText);
+    renderText(context, x + 50, y, index, time, colorText, height);
     renderRect(context, x, y, index, height, colorHistogram);
+    console.log(x);
   };
 
   function renderHistogram (ctx, arrName, arrTime) {
@@ -58,23 +59,22 @@ var getRandomBlue = function () {
       var colorText = 'black';
       var colorBlue = getRandomBlue();
 
-      if (arrName[i] === 'Вы') {
+      if (name == 'Вы') {
         renderBar(ctx, i, name, colorText, 'rgba(255, 0, 0, 1)', Math.round(time), height);
       } else {
         renderBar(ctx, i, name, colorText, colorBlue, Math.round(time), height);
       }
     }
-  }
+  };
 
 window.renderStatistics = function (ctx, arrName, arrTime) {
 
   renderCloud(ctx, CLOUD_START_X + 10, CLOUD_START_Y + 10, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_START_X, CLOUD_START_Y, 'white');
 
-  //
-  renderText(ctx, CLOUD_START_X, CLOUD_START_Y + 30, 'Ура вы победили!', 'black');
-  renderText(ctx, CLOUD_START_X, CLOUD_START_Y + 50, 'Список результатов:', 'black');
+  renderText(ctx, CLOUD_START_X + 50, CLOUD_START_Y + 30, 'Ура вы победили!', 'black');
+  renderText(ctx, CLOUD_START_X + 50, CLOUD_START_Y + 50, 'Список результатов:', 'black');
 
-  // Вывод гистограмм
+  renderHistogram(ctx, arrName, arrTime);
 
 };
