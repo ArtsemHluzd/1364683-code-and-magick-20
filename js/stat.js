@@ -27,10 +27,10 @@ var renderText = function (ctx, x, y, text, color) {
 //   ctx.fillText(time, x, y - height - 5);
 // };
 
-// var renderBar = function (ctx, x, y, index, height, color) {
-//   ctx.fillStyle = color;
-//   ctx.fillRect(x, y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
-// };
+var renderRect = function (ctx, x, y, height, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
+};
 
 var getRandomInt = function (min, max) {
   return Math.round(Math.random() * (max - min) + 1);
@@ -53,9 +53,7 @@ var findMaxTime = function (arr) {
     var y = HISTOGRAM_START_Y;
     renderText(context, x, y, index, name, colorText);
     renderTime(context, x, y, index, time, colorText, height1);
-    // renderBar(context, x, y, index, height, colorHistogram);
-    ctx.fillStyle = colorHistogram;
-    ctx.fillRect(x, y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
+    renderRect(context, x, y, index, height, colorHistogram);
   };
 
   function renderHistogram (ctx, arrName, arrTime) {
