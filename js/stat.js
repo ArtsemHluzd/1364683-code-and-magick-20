@@ -19,13 +19,7 @@ var renderText = function (ctx, x, y, text, color) {
   ctx.font = '16px PT Mono';
   ctx.fillStyle = color;
   ctx.fillText(text, x, y);
-  /// убрать 20
 };
-
-// var renderTime = function (ctx, x, y, index, time, color, height) {
-//   ctx.fillStyle = color;
-//   ctx.fillText(time, x, y - height - 5);
-// };
 
 var renderRect = function (ctx, x, y, height, color) {
   ctx.fillStyle = color;
