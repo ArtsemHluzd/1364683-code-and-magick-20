@@ -21,6 +21,11 @@ var renderText = function (ctx, x, y, text, color) {
   ctx.fillText(text, x, y);
 };
 
+var findMaxTime = function (arr) {
+  var maxTime = Math.max.apply(null, arr);
+  return Math.round(maxTime);
+};
+
 var renderRect = function (ctx, x, y, height, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y - height, DISTANCE_BETWEEN_HISTOGRAM, height);
@@ -35,11 +40,6 @@ var getRandomBlue = function () {
   var suration = getRandomInt(1, 100);
   var lightness = 50;
   return 'hsl(' + hue + ', ' + suration + '%, ' + lightness + '%)';
-};
-
-var findMaxTime = function (arr) {
-  var maxTime = Math.max.apply(null, arr);
-  return Math.round(maxTime);
 };
 
   var renderBar = function (context, index, name, colorText, colorHistogram, time, height1) {
@@ -72,9 +72,8 @@ window.renderStatistics = function (ctx, arrName, arrTime) {
   renderCloud(ctx, CLOUD_START_X, CLOUD_START_Y, 'white');
 
   //
-  ctx.fillStyle = 'black';
-  ctx.fillText('Ура вы победили!', HISTOGRAM_START_X, CLOUD_START_Y + 30);
-  ctx.fillText('Список результатов:', HISTOGRAM_START_X, CLOUD_START_Y + 50);
+  renderText(ctx, CLOUD_START_X, CLOUD_START_Y + 30, 'Ура вы победили!', 'black');
+  renderText(ctx, CLOUD_START_X, CLOUD_START_Y + 50, 'Список результатов:', 'black');
 
   // Вывод гистограмм
 
