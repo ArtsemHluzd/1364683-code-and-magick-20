@@ -5,7 +5,7 @@ var CLOUD_HEIGHT = 270;
 var CLOUD_START_X = 100;
 var CLOUD_START_Y = 10;
 var HISTOGRAM_START_X = 150;
-var HISTOGRAM_START_Y = 240;
+var HISTOGRAM_START_Y = 250;
 var MAX_HEIGHT_HISTOGRAM = 150;
 var WEIGHT_HISTOGRAM = 40;
 var DISTANCE_BETWEEN_HISTOGRAM = 50;
@@ -45,8 +45,8 @@ var findMaxTime = function (arr) {
 var renderBar = function (context, index, name, colorText, colorHistogram, time, height) {
   var x = HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index);
   var y = HISTOGRAM_START_Y;
-  renderText(context, x + 10, y, name, colorText);
-  renderText(context, x + 50, y, time, colorText, height);
+  renderText(context, x, y + 15, name, colorText);
+  renderText(context, x, y - height - 5, time, colorText, height);
   renderRect(context, x, y, height, colorHistogram);
 };
 
