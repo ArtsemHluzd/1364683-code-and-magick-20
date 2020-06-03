@@ -45,9 +45,9 @@ var findMaxTime = function (arr) {
   var renderBar = function (context, index, name, colorText, colorHistogram, time, height) {
     var x = HISTOGRAM_START_X + (WEIGHT_HISTOGRAM * index) + (DISTANCE_BETWEEN_HISTOGRAM * index);
     var y = HISTOGRAM_START_Y;
-    renderText(context, x + 10, y, index, name, colorText);
-    renderText(context, x + 50, y, index, time, colorText, height);
-    renderRect(context, x, y, index, height, colorHistogram);
+    renderText(context, x + 10, y, name, colorText);
+    renderText(context, x + 50, y, time, colorText, height);
+    renderRect(context, x, y, height, colorHistogram);
     console.log(x);
   };
 
@@ -57,12 +57,11 @@ var findMaxTime = function (arr) {
       var name = arrName[i];
       var time = arrTime[i];
       var colorText = 'black';
-      var colorBlue = getRandomBlue();
 
       if (name == 'Вы') {
         renderBar(ctx, i, name, colorText, 'rgba(255, 0, 0, 1)', Math.round(time), height);
       } else {
-        renderBar(ctx, i, name, colorText, colorBlue, Math.round(time), height);
+        renderBar(ctx, i, name, colorText, getRandomBlue(), Math.round(time), height);
       }
     }
   };
