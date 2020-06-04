@@ -6,8 +6,26 @@ var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Валь
 var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
 
-var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
+var renderUserDialog = function() {
+
+var userDialog = document.querySelector('.setup');
+userDialog.classList.remove('hidden');
+
+document.querySelector('.setup-similar').classList.remove('hidden');
+
+var similarList = document.querySelector('.setup-similar-list');
+var similarItemTemplate = document.querySelector('#similar-wizard-template')
+.content
+.querySelector('.setup-similar-item');
+
+for (var i = 0; i < 4; i++) {
+  var similarItem = similarItemTemplate.cloneNode(true);
+  similarList.appendChild(similarItem);
+}
+
+};
+
+renderUserDialog();
 
 var getRandomInt = function (min, max) {
   return Math.round(Math.random() * (max - min) + 1);
