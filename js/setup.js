@@ -1,6 +1,6 @@
 'use strict';
 
-var characters = [];
+var wizzards = [];
 var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var coatColorArr = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -30,7 +30,7 @@ var generateObj = function (nameArr, surnameArr, coatColors, eyesColors) {
     var coatColor = generateElement(coatColors);
     var eyesColor = generateElement(eyesColors);
 
-    characters[i] = {
+    wizzards[i] = {
       name: name,
       coatColor: coatColor,
       eyesColor: eyesColor
@@ -38,7 +38,7 @@ var generateObj = function (nameArr, surnameArr, coatColors, eyesColors) {
   }
 };
 
-var changeCharacters = function (obj) {
+var changeWizzards = function (obj) {
   var similarList = document.querySelector('.setup-similar-list');
   var similarItemTemplate = document.querySelector('#similar-wizard-template')
     .content
@@ -63,4 +63,4 @@ var changeCharacters = function (obj) {
 
 renderUserDialog();
 generateObj(names, surnames, coatColorArr, eyesColorArr);
-changeCharacters(characters);
+changeWizzards(wizzards);
