@@ -74,5 +74,4 @@ window.renderStatistics = function (ctx, arrName, arrTime) {
   renderText(ctx, CLOUD_START_X + 50, CLOUD_START_Y + 50, 'Список результатов:', 'black');
 
   renderHistogram(ctx, arrName, arrTime);
-
 };
