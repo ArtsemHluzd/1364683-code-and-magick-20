@@ -15,29 +15,10 @@ var generateElement = function (element) {
   return element[random];
 };
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-document.querySelector('.setup-similar').classList.remove('hidden');
-var similarList = document.querySelector('.setup-similar-list');
-var similarItemTemplate = document.querySelector('#similar-wizard-template')
-  .content
-  .querySelector('.setup-similar-item');
-
-var changeColorOfCharacters = function () {
-
-  for (var i = 0; i < 4; i++) {
-
-    var similarItem = similarItemTemplate.cloneNode(true);
-    // var setupSimilarLabel = document.querySelector('.setup-similar-label');
-    // setupSimilarLabel.textContent = characters[i].name;
-    // var wizardCoat = document.querySelector('.wizard-coat');
-    // wizardCoat.style.fill = characters[i].coatColor;
-    // var wizardEyes = document.querySelector('.wizard-eyes');
-    // wizardEyes.style.fill = characters[i].coatEyes;
-
-    // similarItem.appendChild(setupSimilarLabel);
-    similarList.appendChild(similarItem);
-  }
+var renderUserDialog = function () {
+  var userDialog = document.querySelector('.setup');
+  userDialog.classList.remove('hidden');
+  document.querySelector('.setup-similar').classList.remove('hidden');
 
 };
 
@@ -57,7 +38,29 @@ var generateObj = function (nameArr, surnameArr, coatColors, eyesColors) {
   }
 };
 
+var changeCharacters = function (obj) {
+  var similarList = document.querySelector('.setup-similar-list');
+  var similarItemTemplate = document.querySelector('#similar-wizard-template')
+    .content
+    .querySelector('.setup-similar-item');
+  var fragment = document.createDocumentFragment();
 
-// renderUserDialog();
+  for (var i = 0; i < 4; i++) {
+    var similarItem = similarItemTemplate.cloneNode(true);
+
+    var wizzardName = similarItem.querySelector('.setup-similar-label');
+    wizzardName.textContent = obj[i].name;
+    var wizardCoat = similarItem.querySelector('.wizard-coat');
+    wizardCoat.style.fill = obj[i].coatColor;
+    var wizardEyes = similarItem.querySelector('.wizard-eyes');
+    wizardEyes.style.fill = obj[i].coatEyes;
+
+    fragment.appendChild(similarItem);
+    similarList.appendChild(fragment);
+  }
+
+};
+
+renderUserDialog();
 generateObj(names, surnames, coatColorArr, eyesColorArr);
-changeColorOfCharacters();
+changeCharacters(characters);
