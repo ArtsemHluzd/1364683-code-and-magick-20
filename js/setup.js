@@ -14,12 +14,17 @@ var generateElement = function (element) {
   return element[random];
 };
 
-var renderUserDialog = function () {
-  var userDialog = document.querySelector('.setup');
+var hideUserDialog = function() {
+  userDialog.classList.add('hidden');
+};
+
+var openUserDialog = function () {
   userDialog.classList.remove('hidden');
   document.querySelector('.setup-similar').classList.remove('hidden');
-
+  var setupCloseBtn = userDialog.querySelector('.setup-close');
+  setupCloseBtn.addEventListener('click', hideUserDialog);
 };
+
 
 var createWizzards = function (nameArr, surnameArr, coatColors, eyesColors) {
   var wizzards = [];
@@ -60,6 +65,19 @@ var renderWizzards = function (wizzards) {
 
 };
 
-renderUserDialog();
 var wizzards = createWizzards(names, surnames, coatColorArr, eyesColorArr);
 renderWizzards(wizzards);
+
+
+var userDialog = document.querySelector('.setup');
+var setupOpenBtn = document.querySelector('.setup-open');
+setupOpenBtn.addEventListener('click', function() {
+  openUserDialog();
+});
+
+document.addEventListener('keydown', function(evt) {
+ if (evt.key === 'Enter') {
+   evt.preventDefault();
+   userDialog.classList.remove('hidden');
+ }
+});
