@@ -14,15 +14,25 @@ var generateElement = function (element) {
   return element[random];
 };
 
+var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeUserDialog();
+  }
+};
+
+
 var openUserDialog = function () {
   userDialog.classList.remove('hidden');
   document.querySelector('.setup-similar').classList.remove('hidden');
   setupCloseBtn.addEventListener('click', closeUserDialog);
+  setupCloseBtn.addEventListener('keydown', onPopupEscPress);
 };
 
 var closeUserDialog = function () {
   userDialog.classList.add('hidden');
   setupCloseBtn.removeEventListener('click', closeUserDialog);
+  setupCloseBtn.removeEventListener('keydown', onPopupEscPress);
 };
 
 
@@ -68,29 +78,17 @@ var renderWizzards = function (wizzards) {
 var wizzards = createWizzards(names, surnames, coatColorArr, eyesColorArr);
 renderWizzards(wizzards);
 
-
 var userDialog = document.querySelector('.setup');
 var setupOpenBtn = document.querySelector('.setup-open');
 var setupCloseBtn = userDialog.querySelector('.setup-close');
 
-setupOpenBtn.addEventListener('click', function() {
+setupOpenBtn.addEventListener('click', function () {
   openUserDialog();
 });
 
-setupCloseBtn.addEventListener('click', function () {
-  closeUserDialog();
-});
-
 document.addEventListener('keydown', function (evt) {
- if (evt.key === 'Enter') {
-   evt.preventDefault();
-   openUserDialog();
- }
-});
-
-userDialog.addEventListener('keydown', function (evt) {
- if (evt.key === 'Escape') {
-  evt.preventDefault();
-  closeUserDialog();
- }
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    openUserDialog();
+  }
 });
