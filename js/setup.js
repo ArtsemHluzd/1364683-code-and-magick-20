@@ -30,12 +30,18 @@ var onPopupCloseEnterPress = function (evt) {
   }
 };
 
+
 var onPopupSubmitEnterPres = function (evt) {
   if (evt.key === 'Enter') {
     evt.preventDefault();
-    setupSubmit.submit();
+    // не что нужно именно так отправлять форму
+    setupForm.submit();
   }
 };
+
+var onPopupSubmitEnterClick = function () {
+  setupForm.submit();
+}
 
 
 var openUserDialog = function () {
@@ -43,8 +49,9 @@ var openUserDialog = function () {
   document.querySelector('.setup-similar').classList.remove('hidden');
   setupCloseBtn.addEventListener('click', closeUserDialog);
   document.addEventListener('keydown', onPopupEscPress);
-  setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress)
-  setupSubmit.addEventListener('keydown', )
+  setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress);
+  setupSubmit.addEventListener('keydown', onPopupSubmitEnterPres);
+  setupSubmit.addEventListener('click', onPopupSubmitEnterClick);
 
 };
 
@@ -52,7 +59,9 @@ var closeUserDialog = function () {
   userDialog.classList.add('hidden');
   setupCloseBtn.removeEventListener('click', closeUserDialog);
   document.removeEventListener('keydown', onPopupEscPress);
-  setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress)
+  setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress);
+  setupSubmit.removeEventListener('keydown', onPopupSubmitEnterPres);
+  setupSubmit.removeEventListener('click', onPopupSubmitEnterClick);
 };
 
 
@@ -104,6 +113,7 @@ var setupCloseBtn = userDialog.querySelector('.setup-close');
 var setupOpenIcon = document.querySelector('.setup-open-icon');
 var inputUserName = document.querySelector('.setup-user-name');
 var setupSubmit = document.querySelector('.setup-submit');
+var setupForm = document.querySelector('.setup-wizard-form')
 
 // не могу понять почему обработчик ниже не срабатыват ....
 setupOpenIcon.addEventListener('keydown', function (evt) {
