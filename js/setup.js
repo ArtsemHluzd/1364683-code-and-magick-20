@@ -5,6 +5,21 @@ var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Валь
 var coatColorArr = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var eyesColorArr = ['black', 'red', 'blue', 'yellow', 'green'];
 
+var userDialog = document.querySelector('.setup');
+var setupOpenBtn = document.querySelector('.setup-open');
+var setupCloseBtn = userDialog.querySelector('.setup-close');
+var setupOpenIcon = document.querySelector('.setup-open-icon');
+var inputUserName = document.querySelector('.setup-user-name');
+var setupSubmit = document.querySelector('.setup-submit');
+var setupForm = document.querySelector('.setup-wizard-form');
+var wizzardCoat = document.querySelector('.setup-wizard .wizard-coat');
+var wizzardCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var wizzardEyes = document.querySelector('.wizard-eyes');
+var wizzardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var fireBall = document.querySelector('.setup-fireball-wrap');
+var fireBallColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var fireBallInput = document.querySelector('.setup-fireball-input');
+
 var getRandomInt = function (min, max) {
   return Math.round(Math.random() * (max - min) + 1);
 };
@@ -34,29 +49,27 @@ var onPopupCloseEnterPress = function (evt) {
 var onPopupSubmitEnterPres = function (evt) {
   if (evt.key === 'Enter') {
     evt.preventDefault();
-    // не что нужно именно так отправлять форму
     setupForm.submit();
   }
 };
 
 var onPopupSubmitEnterClick = function () {
-   // не что нужно именно так отправлять форму
   setupForm.submit();
-}
+};
 
 var changeWizzardCoatColor = function () {
   wizzardCoat.style = 'fill: ' + generateElement(wizzardCoatColor);
-}
+};
 
 var changeWizzardEyes = function () {
   wizzardEyes.style = 'fill: ' + generateElement(wizzardEyesColors);
-}
+};
 
 var changeFireBallBackground = function () {
   var color = generateElement(fireBallColors);
   fireBall.style.backgroundColor = color;
   fireBallInput.value = color;
-}
+};
 
 var openUserDialog = function () {
   userDialog.classList.remove('hidden');
@@ -126,22 +139,6 @@ var renderWizzards = function (wizzards) {
 var wizzards = createWizzards(names, surnames, coatColorArr, eyesColorArr);
 renderWizzards(wizzards);
 
-var userDialog = document.querySelector('.setup');
-var setupOpenBtn = document.querySelector('.setup-open');
-var setupCloseBtn = userDialog.querySelector('.setup-close');
-var setupOpenIcon = document.querySelector('.setup-open-icon');
-var inputUserName = document.querySelector('.setup-user-name');
-var setupSubmit = document.querySelector('.setup-submit');
-var setupForm = document.querySelector('.setup-wizard-form');
-var wizzardCoat = document.querySelector('.setup-wizard .wizard-coat');
-var wizzardCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var wizzardEyes = document.querySelector('.wizard-eyes');
-var wizzardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
-var fireBall = document.querySelector('.setup-fireball-wrap');
-var fireBallColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-var fireBallInput = document.querySelector('.setup-fireball-input');
-
-// не могу понять почему обработчик ниже не срабатыват ....
 setupOpenIcon.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     evt.preventDefault();
