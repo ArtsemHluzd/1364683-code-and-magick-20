@@ -15,9 +15,11 @@ var generateElement = function (element) {
 };
 
 var onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closeUserDialog();
+  if (document.activeElement !== inputUserName) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeUserDialog();
+    }
   }
 };
 
@@ -26,13 +28,13 @@ var openUserDialog = function () {
   userDialog.classList.remove('hidden');
   document.querySelector('.setup-similar').classList.remove('hidden');
   setupCloseBtn.addEventListener('click', closeUserDialog);
-  setupCloseBtn.addEventListener('keydown', onPopupEscPress);
+  document.addEventListener('keydown', onPopupEscPress);
 };
 
 var closeUserDialog = function () {
   userDialog.classList.add('hidden');
   setupCloseBtn.removeEventListener('click', closeUserDialog);
-  setupCloseBtn.removeEventListener('keydown', onPopupEscPress);
+  document.removeEventListener('keydown', onPopupEscPress);
 };
 
 
@@ -81,14 +83,18 @@ renderWizzards(wizzards);
 var userDialog = document.querySelector('.setup');
 var setupOpenBtn = document.querySelector('.setup-open');
 var setupCloseBtn = userDialog.querySelector('.setup-close');
+var setupOpenIcon = document.querySelector('.setup-open-icon');
+var inputUserName = document.querySelector('.setup-user-name');
 
-setupOpenBtn.addEventListener('click', function () {
-  openUserDialog();
-});
-
-document.addEventListener('keydown', function (evt) {
+// не могу понять почему обработчик ниже не срабатыват ....
+setupOpenIcon.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     evt.preventDefault();
     openUserDialog();
   }
 });
+
+setupOpenBtn.addEventListener('click', function () {
+  openUserDialog();
+});
+
