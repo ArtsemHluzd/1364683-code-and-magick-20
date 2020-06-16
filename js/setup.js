@@ -23,18 +23,36 @@ var onPopupEscPress = function (evt) {
   }
 };
 
+var onPopupCloseEnterPress = function (evt) {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    closeUserDialog();
+  }
+};
+
+var onPopupSubmitEnterPres = function (evt) {
+  if (evt.key === 'Enter') {
+    evt.preventDefault();
+    setupSubmit.submit();
+  }
+};
+
 
 var openUserDialog = function () {
   userDialog.classList.remove('hidden');
   document.querySelector('.setup-similar').classList.remove('hidden');
   setupCloseBtn.addEventListener('click', closeUserDialog);
   document.addEventListener('keydown', onPopupEscPress);
+  setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress)
+  setupSubmit.addEventListener('keydown', )
+
 };
 
 var closeUserDialog = function () {
   userDialog.classList.add('hidden');
   setupCloseBtn.removeEventListener('click', closeUserDialog);
   document.removeEventListener('keydown', onPopupEscPress);
+  setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress)
 };
 
 
@@ -85,6 +103,7 @@ var setupOpenBtn = document.querySelector('.setup-open');
 var setupCloseBtn = userDialog.querySelector('.setup-close');
 var setupOpenIcon = document.querySelector('.setup-open-icon');
 var inputUserName = document.querySelector('.setup-user-name');
+var setupSubmit = document.querySelector('.setup-submit');
 
 // не могу понять почему обработчик ниже не срабатыват ....
 setupOpenIcon.addEventListener('keydown', function (evt) {
