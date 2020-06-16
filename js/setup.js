@@ -9,9 +9,9 @@ var getRandomInt = function (min, max) {
   return Math.round(Math.random() * (max - min) + 1);
 };
 
-var generateElement = function (element) {
-  var random = getRandomInt(0, element.length - 2);
-  return element[random];
+var generateElement = function (arr) {
+  var random = getRandomInt(0, arr.length - 2);
+  return arr[random];
 };
 
 var onPopupEscPress = function (evt) {
@@ -40,9 +40,23 @@ var onPopupSubmitEnterPres = function (evt) {
 };
 
 var onPopupSubmitEnterClick = function () {
+   // не что нужно именно так отправлять форму
   setupForm.submit();
 }
 
+var changeWizzardCoatColor = function () {
+  wizzardCoat.style = 'fill: ' + generateElement(wizzardCoatColor);
+}
+
+var changeWizzardEyes = function () {
+  wizzardEyes.style = 'fill: ' + generateElement(wizzardEyesColors);
+}
+
+var changeFireBallBackground = function () {
+  var color = generateElement(fireBallColors);
+  fireBall.style.backgroundColor = color;
+  fireBallInput.value = color;
+}
 
 var openUserDialog = function () {
   userDialog.classList.remove('hidden');
@@ -52,6 +66,9 @@ var openUserDialog = function () {
   setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress);
   setupSubmit.addEventListener('keydown', onPopupSubmitEnterPres);
   setupSubmit.addEventListener('click', onPopupSubmitEnterClick);
+  wizzardCoat.addEventListener('click', changeWizzardCoatColor);
+  wizzardEyes.addEventListener('click', changeWizzardEyes);
+  fireBall.addEventListener('click', changeFireBallBackground);
 
 };
 
@@ -62,8 +79,10 @@ var closeUserDialog = function () {
   setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress);
   setupSubmit.removeEventListener('keydown', onPopupSubmitEnterPres);
   setupSubmit.removeEventListener('click', onPopupSubmitEnterClick);
+  wizzardCoat.removeEventListener('click', changeWizzardCoatColor);
+  wizzardEyes.removeEventListener('click', changeWizzardEyes);
+  fireBall.removeEventListener('click', changeFireBallBackground);
 };
-
 
 var createWizzards = function (nameArr, surnameArr, coatColors, eyesColors) {
   var wizzards = [];
@@ -113,7 +132,14 @@ var setupCloseBtn = userDialog.querySelector('.setup-close');
 var setupOpenIcon = document.querySelector('.setup-open-icon');
 var inputUserName = document.querySelector('.setup-user-name');
 var setupSubmit = document.querySelector('.setup-submit');
-var setupForm = document.querySelector('.setup-wizard-form')
+var setupForm = document.querySelector('.setup-wizard-form');
+var wizzardCoat = document.querySelector('.setup-wizard .wizard-coat');
+var wizzardCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var wizzardEyes = document.querySelector('.wizard-eyes');
+var wizzardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var fireBall = document.querySelector('.setup-fireball-wrap');
+var fireBallColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var fireBallInput = document.querySelector('.setup-fireball-input');
 
 // не могу понять почему обработчик ниже не срабатыват ....
 setupOpenIcon.addEventListener('keydown', function (evt) {
@@ -126,4 +152,3 @@ setupOpenIcon.addEventListener('keydown', function (evt) {
 setupOpenBtn.addEventListener('click', function () {
   openUserDialog();
 });
-
