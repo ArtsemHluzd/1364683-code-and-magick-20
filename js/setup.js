@@ -152,4 +152,8 @@
     openUserDialog();
   });
 
+  window.setup = {
+    userDialog: userDialog
+  };
+
 })();
