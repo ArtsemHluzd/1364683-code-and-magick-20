@@ -84,7 +84,8 @@
     wizzardCoat.addEventListener('click', changeWizzardCoatColor);
     wizzardEyes.addEventListener('click', changeWizzardEyes);
     fireBall.addEventListener('click', changeFireBallBackground);
-
+    userDialog.style.top = 80 + 'px';
+    userDialog.style.left = 50 + '%';
   };
 
   var closeUserDialog = function () {
