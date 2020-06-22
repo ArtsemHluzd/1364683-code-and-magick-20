@@ -32,8 +32,9 @@
     };
 
     var onMouseUp = function () {
-      document.removeEventListener(onMouseMove);
-      document.removeEventListener(onMouseUp);
+      userDialogUpload.removeEventListener('mousemove', onMouseMove);
+      userDialogUpload.removeEventListener('mouseup', onMouseUp);
+      
       dragged = false;
 
       if (dragged) {
