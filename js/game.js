@@ -1,7 +1,5 @@
 'use strict';
 
-(function () {
-
   window.GameConstants = {
     Fireball: {
       size: window.fireballSize || 24,
@@ -825,5 +823,4 @@
 
     return game;
   })();
-
-})();
+  

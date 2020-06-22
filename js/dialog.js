@@ -12,11 +12,11 @@
       y: evt.clientY
     };
 
-    var dragged = false;
+    var dragged = true;
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      dragged = true;
+
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -34,6 +34,7 @@
     var onMouseUp = function () {
       document.removeEventListener(onMouseMove);
       document.removeEventListener(onMouseUp);
+      dragged = false;
 
       if (dragged) {
         var onClickPreventDefault = function (clickEvt) {
