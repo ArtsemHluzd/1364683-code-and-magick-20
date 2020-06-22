@@ -36,7 +36,6 @@
     var onMouseUp = function () {
       userDialogUpload.removeEventListener('mousemove', onMouseMove);
       userDialogUpload.removeEventListener('mouseup', onMouseUp);
-  
 
       if (dragged) {
         var onClickPreventDefault = function (clickEvt) {
