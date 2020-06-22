@@ -12,10 +12,12 @@
       y: evt.clientY
     };
 
-    var dragged = true;
+    var dragged = false;
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+
+      dragged = true;
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -34,8 +36,7 @@
     var onMouseUp = function () {
       userDialogUpload.removeEventListener('mousemove', onMouseMove);
       userDialogUpload.removeEventListener('mouseup', onMouseUp);
-      
-      dragged = false;
+  
 
       if (dragged) {
         var onClickPreventDefault = function (clickEvt) {
