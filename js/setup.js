@@ -154,7 +154,8 @@
   });
 
   window.setup = {
-    userDialog: userDialog
+    userDialog: userDialog,
+    setupForm: setupForm
   };
 
 })();
