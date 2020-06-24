@@ -153,6 +153,11 @@
     openUserDialog();
   });
 
+  setupForm.addEventListener('submit', function (evt) {
+    window.backend.sabe(new FormData(setupForm), window.backend.onload(), window.backend.onError());
+    evt.preventDefault();
+  });
+
   window.setup = {
     userDialog: userDialog,
     setupForm: setupForm
