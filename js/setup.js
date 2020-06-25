@@ -143,10 +143,10 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.load(onLoad, onError);
+  window.backend.load(onLoad, onError);
 
   setupForm.addEventListener('submit', function (evt) {
-    window.save(new FormData(setupForm), onLoad, onError);
+    window.backend.save(new FormData(setupForm), onLoad, onError);
     evt.preventDefault();
   });
 

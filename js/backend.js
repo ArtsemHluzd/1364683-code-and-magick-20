@@ -11,7 +11,7 @@
 
   var TIMEOUT_IN_MS = 10000;
 
-  window.load = function (onLoad, onError) {
+  var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     console.log(xhr.response);
@@ -36,7 +36,7 @@
   };
 
 
-  window.save = function (data, onLoad, onError) {
+  var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -49,6 +49,11 @@
     });
     xhr.open('POST', URL_TO);
     xhr.send(data);
+  };
+
+  window.backend = {
+    load: load,
+    save: save
   };
 
 })();
