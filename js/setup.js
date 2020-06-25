@@ -2,11 +2,6 @@
 
 (function () {
 
-  var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var coatColorArr = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var eyesColorArr = ['black', 'red', 'blue', 'yellow', 'green'];
-
   var userDialog = document.querySelector('.setup');
   var setupOpenBtn = document.querySelector('.setup-open');
   var setupCloseBtn = userDialog.querySelector('.setup-close');
@@ -101,23 +96,6 @@
     fireBall.removeEventListener('click', changeFireBallBackground);
   };
 
-  var createWizzards = function (nameArr, surnameArr, coatColors, eyesColors) {
-    var wizzards = [];
-    for (var i = 0; i < nameArr.length; i++) {
-
-      var name = generateElement(nameArr) + ' ' + generateElement(surnameArr);
-      var coatColor = generateElement(coatColors);
-      var eyesColor = generateElement(eyesColors);
-
-      wizzards[i] = {
-        name: name,
-        coatColor: coatColor,
-        eyesColor: eyesColor
-      };
-    }
-    return wizzards;
-  };
-
   var renderWizzard = function (wizzard) {
     var similarItemTemplate = document.querySelector('#similar-wizard-template')
       .content
@@ -144,18 +122,9 @@
     openUserDialog();
   });
 
-  var onLoadSave = function (evt) {
-    window.backend.save(new FormData(setupForm), function () {
-      userDialog.classList.add('hidden');
-    });
-    evt.preventDefault();
-  };
-
-  setupForm.addEventListener('submit', onLoadSave);
-
   var onLoad = function (wizzards) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < wizzards.length; i++) {
       fragment.appendChild(renderWizzard(wizzards[i]));
     }
     similarList.appendChild(fragment);
@@ -174,8 +143,12 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  var wizzards = createWizzards(names, surnames, coatColorArr, eyesColorArr);
-  window.backend.load(onLoad(wizzards), onError);
+  window.load(onLoad, onError);
+
+  setupForm.addEventListener('submit', function (evt) {
+    window.save(new FormData(setupForm), onLoad, onError);
+    evt.preventDefault();
+  });
 
   window.setup = {
     userDialog: userDialog,

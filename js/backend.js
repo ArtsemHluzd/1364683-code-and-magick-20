@@ -4,7 +4,6 @@
 
   var URL_FROM = 'https://javascript.pages.academy/code-and-magick/data';
   var URL_TO = 'https://javascript.pages.academy/code-and-magick';
-  xhr.timeout = TIMEOUT_IN_MS;
 
   var StatusCode = {
     ok: 200
@@ -12,20 +11,10 @@
 
   var TIMEOUT_IN_MS = 10000;
 
-  window.backend = {};
-
-  window.backend.onLoad = function (data) {
-    console.log(data);
-  };
-
-  window.backend.onError = function (errorMessage) {
-    console.log(errorMessage);
-  };
-
-  window.backend.load = function (onLoad, onError) {
+  window.load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-
+    console.log(xhr.response);
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
         onLoad(xhr.response);
@@ -34,6 +23,7 @@
       }
     });
 
+    xhr.timeout = TIMEOUT_IN_MS;
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
     });
@@ -46,7 +36,7 @@
   };
 
 
-  window.backend.save = function (data, onLoad, onError) {
+  window.save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -60,4 +50,5 @@
     xhr.open('POST', URL_TO);
     xhr.send(data);
   };
+
 })();
