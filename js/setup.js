@@ -51,10 +51,6 @@
     }
   };
 
-  var onPopupSubmitEnterClick = function () {
-    setupForm.submit();
-  };
-
   var changeWizzardCoatColor = function () {
     wizzardCoat.style = 'fill: ' + generateElement(wizzardCoatColor);
   };
@@ -76,7 +72,6 @@
     document.addEventListener('keydown', onPopupEscPress);
     setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress);
     setupSubmit.addEventListener('keydown', onPopupSubmitEnterPres);
-    setupSubmit.addEventListener('click', onPopupSubmitEnterClick);
     wizzardCoat.addEventListener('click', changeWizzardCoatColor);
     wizzardEyes.addEventListener('click', changeWizzardEyes);
     fireBall.addEventListener('click', changeFireBallBackground);
@@ -90,7 +85,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
     setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress);
     setupSubmit.removeEventListener('keydown', onPopupSubmitEnterPres);
-    setupSubmit.removeEventListener('click', onPopupSubmitEnterClick);
     wizzardCoat.removeEventListener('click', changeWizzardCoatColor);
     wizzardEyes.removeEventListener('click', changeWizzardEyes);
     fireBall.removeEventListener('click', changeFireBallBackground);
@@ -131,6 +125,10 @@
     userDialog.querySelector('.setup-similar').classList.remove('hidden');
   };
 
+  var onLoadSave = function () {
+    userDialog.classList.add('hidden');
+  };
+
   var onError = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
@@ -146,8 +144,8 @@
   window.backend.load(onLoad, onError);
 
   setupForm.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(setupForm), onLoad, onError);
     evt.preventDefault();
+    window.backend.save(new FormData(setupForm), onLoadSave, onError);
   });
 
   window.setup = {

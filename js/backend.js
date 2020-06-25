@@ -39,7 +39,7 @@
   var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-
+    xhr.open('POST', URL_TO);
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.ok) {
         onLoad(xhr.response);
@@ -47,7 +47,6 @@
         onError('К сожалению, что-то пошло не так');
       }
     });
-    xhr.open('POST', URL_TO);
     xhr.send(data);
   };
 
