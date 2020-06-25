@@ -14,9 +14,9 @@
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    console.log(xhr.response);
+
     xhr.addEventListener('load', function () {
-      if (xhr.status === StatusCode.OK) {
+      if (xhr.status === StatusCode.ok) {
         onLoad(xhr.response);
       } else {
         onError('что-то пошло не так');
@@ -41,10 +41,10 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === StatusCode.OK) {
+      if (xhr.status === StatusCode.ok) {
         onLoad(xhr.response);
       } else {
-        onError('К сожалению, что-то произошло');
+        onError('К сожалению, что-то пошло не так');
       }
     });
     xhr.open('POST', URL_TO);

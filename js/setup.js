@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-
+  var WIZZSRDS_NUMBER = 4;
   var userDialog = document.querySelector('.setup');
   var setupOpenBtn = document.querySelector('.setup-open');
   var setupCloseBtn = userDialog.querySelector('.setup-close');
@@ -105,9 +105,9 @@
     var wizzardName = similarItem.querySelector('.setup-similar-label');
     wizzardName.textContent = wizzard.name;
     var wizardCoat = similarItem.querySelector('.wizard-coat');
-    wizardCoat.style.fill = wizzard.coatColor;
+    wizardCoat.style.fill = wizzard.colorCoat;
     var wizardEyes = similarItem.querySelector('.wizard-eyes');
-    wizardEyes.style.fill = wizzard.coatEyes;
+    wizardEyes.style.fill = wizzard.colorEyes;
     return similarItem;
   };
 
@@ -124,7 +124,7 @@
 
   var onLoad = function (wizzards) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < wizzards.length; i++) {
+    for (var i = 0; i < WIZZSRDS_NUMBER; i++) {
       fragment.appendChild(renderWizzard(wizzards[i]));
     }
     similarList.appendChild(fragment);
