@@ -1,12 +1,7 @@
 'use strict';
 
 (function () {
-
-  var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var coatColorArr = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var eyesColorArr = ['black', 'red', 'blue', 'yellow', 'green'];
-
+  var WIZZARDS_NUMBER = 4;
   var userDialog = document.querySelector('.setup');
   var setupOpenBtn = document.querySelector('.setup-open');
   var setupCloseBtn = userDialog.querySelector('.setup-close');
@@ -21,6 +16,7 @@
   var fireBall = document.querySelector('.setup-fireball-wrap');
   var fireBallColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var fireBallInput = document.querySelector('.setup-fireball-input');
+  var similarList = document.querySelector('.setup-similar-list');
 
   var getRandomInt = function (min, max) {
     return Math.round(Math.random() * (max - min) + 1);
@@ -55,10 +51,6 @@
     }
   };
 
-  var onPopupSubmitEnterClick = function () {
-    setupForm.submit();
-  };
-
   var changeWizzardCoatColor = function () {
     wizzardCoat.style = 'fill: ' + generateElement(wizzardCoatColor);
   };
@@ -80,7 +72,6 @@
     document.addEventListener('keydown', onPopupEscPress);
     setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress);
     setupSubmit.addEventListener('keydown', onPopupSubmitEnterPres);
-    setupSubmit.addEventListener('click', onPopupSubmitEnterClick);
     wizzardCoat.addEventListener('click', changeWizzardCoatColor);
     wizzardEyes.addEventListener('click', changeWizzardEyes);
     fireBall.addEventListener('click', changeFireBallBackground);
@@ -94,53 +85,25 @@
     document.removeEventListener('keydown', onPopupEscPress);
     setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress);
     setupSubmit.removeEventListener('keydown', onPopupSubmitEnterPres);
-    setupSubmit.removeEventListener('click', onPopupSubmitEnterClick);
     wizzardCoat.removeEventListener('click', changeWizzardCoatColor);
     wizzardEyes.removeEventListener('click', changeWizzardEyes);
     fireBall.removeEventListener('click', changeFireBallBackground);
   };
 
-  var createWizzards = function (nameArr, surnameArr, coatColors, eyesColors) {
-    var wizzards = [];
-    for (var i = 0; i < nameArr.length; i++) {
-
-      var name = generateElement(nameArr) + ' ' + generateElement(surnameArr);
-      var coatColor = generateElement(coatColors);
-      var eyesColor = generateElement(eyesColors);
-
-      wizzards[i] = {
-        name: name,
-        coatColor: coatColor,
-        eyesColor: eyesColor
-      };
-    }
-    return wizzards;
-  };
-
-  var renderWizzards = function (wizzards) {
-    var similarList = document.querySelector('.setup-similar-list');
+  var renderWizzard = function (wizzard) {
     var similarItemTemplate = document.querySelector('#similar-wizard-template')
       .content
       .querySelector('.setup-similar-item');
-    var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < 4; i++) {
-      var similarItem = similarItemTemplate.cloneNode(true);
-      var wizzardName = similarItem.querySelector('.setup-similar-label');
-      wizzardName.textContent = wizzards[i].name;
-      var wizardCoat = similarItem.querySelector('.wizard-coat');
-      wizardCoat.style.fill = wizzards[i].coatColor;
-      var wizardEyes = similarItem.querySelector('.wizard-eyes');
-      wizardEyes.style.fill = wizzards[i].coatEyes;
-
-      fragment.appendChild(similarItem);
-      similarList.appendChild(fragment);
-    }
-
+    var similarItem = similarItemTemplate.cloneNode(true);
+    var wizzardName = similarItem.querySelector('.setup-similar-label');
+    wizzardName.textContent = wizzard.name;
+    var wizardCoat = similarItem.querySelector('.wizard-coat');
+    wizardCoat.style.fill = wizzard.colorCoat;
+    var wizardEyes = similarItem.querySelector('.wizard-eyes');
+    wizardEyes.style.fill = wizzard.colorEyes;
+    return similarItem;
   };
-
-  var wizzards = createWizzards(names, surnames, coatColorArr, eyesColorArr);
-  renderWizzards(wizzards);
 
   setupOpenIcon.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
@@ -153,8 +116,41 @@
     openUserDialog();
   });
 
+  var onLoad = function (wizzards) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < WIZZARDS_NUMBER; i++) {
+      fragment.appendChild(renderWizzard(wizzards[i]));
+    }
+    similarList.appendChild(fragment);
+    userDialog.querySelector('.setup-similar').classList.remove('hidden');
+  };
+
+  var onLoadSave = function () {
+    userDialog.classList.add('hidden');
+  };
+
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(onLoad, onError);
+
+  setupForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(setupForm), onLoadSave, onError);
+  });
+
   window.setup = {
-    userDialog: userDialog
+    userDialog: userDialog,
+    setupForm: setupForm
   };
 
 })();
