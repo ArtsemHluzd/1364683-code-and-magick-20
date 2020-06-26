@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var WIZZSRDS_NUMBER = 4;
+  var WIZZARDS_NUMBER = 4;
   var userDialog = document.querySelector('.setup');
   var setupOpenBtn = document.querySelector('.setup-open');
   var setupCloseBtn = userDialog.querySelector('.setup-close');
@@ -118,7 +118,7 @@
 
   var onLoad = function (wizzards) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < WIZZSRDS_NUMBER; i++) {
+    for (var i = 0; i < WIZZARDS_NUMBER; i++) {
       fragment.appendChild(renderWizzard(wizzards[i]));
     }
     similarList.appendChild(fragment);
