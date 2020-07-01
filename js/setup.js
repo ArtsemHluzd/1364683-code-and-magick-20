@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var WIZZARDS_NUMBER = 4;
   var userDialog = document.querySelector('.setup');
   var setupOpenBtn = document.querySelector('.setup-open');
   var setupCloseBtn = userDialog.querySelector('.setup-close');
@@ -116,19 +115,6 @@
     openUserDialog();
   });
 
-  var onLoad = function (wizzards) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < WIZZARDS_NUMBER; i++) {
-      fragment.appendChild(renderWizzard(wizzards[i]));
-    }
-    similarList.appendChild(fragment);
-    userDialog.querySelector('.setup-similar').classList.remove('hidden');
-  };
-
-  var onLoadSave = function () {
-    userDialog.classList.add('hidden');
-  };
-
   var onError = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
@@ -141,7 +127,10 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.backend.load(onLoad, onError);
+
+  var onLoadSave = function () {
+    userDialog.classList.add('hidden');
+  };
 
   setupForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
@@ -150,7 +139,8 @@
 
   window.setup = {
     userDialog: userDialog,
-    setupForm: setupForm
+    setupForm: setupForm,
+    renderWizzard: renderWizzard,
   };
 
 })();
