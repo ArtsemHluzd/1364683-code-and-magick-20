@@ -8,23 +8,7 @@
   var inputUserName = document.querySelector('.setup-user-name');
   var setupSubmit = document.querySelector('.setup-submit');
   var setupForm = document.querySelector('.setup-wizard-form');
-  var wizzardCoat = document.querySelector('.setup-wizard .wizard-coat');
-  var wizzardCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var wizzardEyes = document.querySelector('.wizard-eyes');
-  var wizzardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
-  var fireBall = document.querySelector('.setup-fireball-wrap');
-  var fireBallColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-  var fireBallInput = document.querySelector('.setup-fireball-input');
-  var similarList = document.querySelector('.setup-similar-list');
 
-  var getRandomInt = function (min, max) {
-    return Math.round(Math.random() * (max - min) + 1);
-  };
-
-  var generateElement = function (arr) {
-    var random = getRandomInt(0, arr.length - 2);
-    return arr[random];
-  };
 
   var onPopupEscPress = function (evt) {
     if (document.activeElement !== inputUserName) {
@@ -50,20 +34,6 @@
     }
   };
 
-  var changeWizzardCoatColor = function () {
-    wizzardCoat.style = 'fill: ' + generateElement(wizzardCoatColor);
-  };
-
-  var changeWizzardEyes = function () {
-    wizzardEyes.style = 'fill: ' + generateElement(wizzardEyesColors);
-  };
-
-  var changeFireBallBackground = function () {
-    var color = generateElement(fireBallColors);
-    fireBall.style.backgroundColor = color;
-    fireBallInput.value = color;
-  };
-
   var openUserDialog = function () {
     userDialog.classList.remove('hidden');
     document.querySelector('.setup-similar').classList.remove('hidden');
@@ -71,9 +41,6 @@
     document.addEventListener('keydown', onPopupEscPress);
     setupCloseBtn.addEventListener('keydown', onPopupCloseEnterPress);
     setupSubmit.addEventListener('keydown', onPopupSubmitEnterPres);
-    wizzardCoat.addEventListener('click', changeWizzardCoatColor);
-    wizzardEyes.addEventListener('click', changeWizzardEyes);
-    fireBall.addEventListener('click', changeFireBallBackground);
     userDialog.style.top = 80 + 'px';
     userDialog.style.left = 50 + '%';
   };
@@ -84,9 +51,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
     setupCloseBtn.removeEventListener('keydown', onPopupCloseEnterPress);
     setupSubmit.removeEventListener('keydown', onPopupSubmitEnterPres);
-    wizzardCoat.removeEventListener('click', changeWizzardCoatColor);
-    wizzardEyes.removeEventListener('click', changeWizzardEyes);
-    fireBall.removeEventListener('click', changeFireBallBackground);
   };
 
   var renderWizzard = function (wizzard) {
