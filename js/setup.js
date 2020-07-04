@@ -9,8 +9,8 @@
   var setupSubmit = document.querySelector('.setup-submit');
   var setupForm = document.querySelector('.setup-wizard-form');
 
-  var WIZZARDS_NUMBER = 4;
-  var similarList = document.querySelector('.setup-similar-list');
+  // var WIZZARDS_NUMBER = 4;
+  // var similarList = document.querySelector('.setup-similar-list');
 
 
   var onPopupEscPress = function (evt) {
@@ -56,25 +56,25 @@
     setupSubmit.removeEventListener('keydown', onPopupSubmitEnterPres);
   };
 
-  var renderWizzard = function (data) {
+  var renderWizzard = function (wizzard) {
 
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < WIZZARDS_NUMBER; i++) {
-      var wizzard = data[i];
-      var similarItemTemplate = document.querySelector('#similar-wizard-template')
-        .content
-        .querySelector('.setup-similar-item');
+    // var fragment = document.createDocumentFragment();
+    // for (var i = 0; i < WIZZARDS_NUMBER; i++) {
+    var similarItemTemplate = document.querySelector('#similar-wizard-template')
+      .content
+      .querySelector('.setup-similar-item');
 
-      var similarItem = similarItemTemplate.cloneNode(true);
-      var wizzardName = similarItem.querySelector('.setup-similar-label');
-      wizzardName.textContent = wizzard.name;
-      var wizardCoat = similarItem.querySelector('.wizard-coat');
-      wizardCoat.style.fill = wizzard.colorCoat;
-      var wizardEyes = similarItem.querySelector('.wizard-eyes');
-      wizardEyes.style.fill = wizzard.colorEyes;
-      fragment.appendChild(similarItem);
-    }
-    similarList.appendChild(fragment);
+    var similarItem = similarItemTemplate.cloneNode(true);
+    var wizzardName = similarItem.querySelector('.setup-similar-label');
+    wizzardName.textContent = wizzard.name;
+    var wizardCoat = similarItem.querySelector('.wizard-coat');
+    wizardCoat.style.fill = wizzard.colorCoat;
+    var wizardEyes = similarItem.querySelector('.wizard-eyes');
+    wizardEyes.style.fill = wizzard.colorEyes;
+
+    return similarItem;
+    // fragment.appendChild(similarItem);
+    // similarList.appendChild(fragment);
   };
 
   setupOpenIcon.addEventListener('keydown', function (evt) {
