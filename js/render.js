@@ -11,8 +11,21 @@
   var wizzardEyes = document.querySelector('.wizard-eyes');
   var wizzardEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 
-  var WIZZARDS_NUMBER = 4;
-  var similarList = document.querySelector('.setup-similar-list');
+  var DEBOUNCE_INTERVAL = 500;
+
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
 
   var getRandomInt = function (min, max) {
     return Math.round(Math.random() * (max - min) + 1);
@@ -27,14 +40,14 @@
     var newColor = generateElement(wizzardCoatColor);
     wizzardCoat.style = 'fill: ' + coatColor;
     coatColor = newColor;
-    updateWizzards();
+    debounce(updateWizzards);
   };
 
   var changeWizzardEyes = function () {
     var newColor = generateElement(wizzardEyesColors);
     wizzardEyes.style = 'fill: ' + eyesColor;
     eyesColor = newColor;
-    updateWizzards();
+    debounce(updateWizzards);
   };
 
   var getRank = function (wizzard) {
@@ -52,34 +65,9 @@
   };
 
   var updateWizzards = function () {
-
-    window.setup.userDialog.querySelector('.setup-similar').classList.remove('hidden');
-
-    var sameCoatAndEyesWizard = wizzards.filter(function (it) {
-      return it.colorCoat === coatColor && it.colorEyes === eyesColor;
-    });
-    var sameCoatWizzard = wizzards.filter(function (it) {
-      return it.colorCoat === coatColor;
-    });
-    var sameEyesWizzard = wizzards.filter(function (it) {
-      return it.colorEyes === eyesColor;
-    });
-
-    var filteredWizards = sameCoatAndEyesWizard;
-    filteredWizards = filteredWizards.concat(sameCoatWizzard);
-    filteredWizards = filteredWizards.concat(sameEyesWizzard);
-    filteredWizards = filteredWizards.concat(wizzards);
-
-    var uniqWizards = filteredWizards.filter(function (it, i) {
-      return filteredWizards.indexOf(it) === i;
-    });
-
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < WIZZARDS_NUMBER; i++) {
-      var similarItem = window.setup.renderWizzard(uniqWizards[i]);
-      fragment.appendChild(similarItem);
-    }
-    similarList.appendChild(fragment);
+    window.setup.renderWizzard(wizzards.sort(function (left, right) {
+      return getRank(right) - getRank(left);
+    }));
   };
 
   wizzardCoat.addEventListener('click', changeWizzardCoatColor);
@@ -89,6 +77,7 @@
 
     wizzards = data;
     updateWizzards();
+    window.setup.userDialog.querySelector('.setup-similar').classList.remove('hidden');
   };
 
   var onError = function (errorMessage) {
